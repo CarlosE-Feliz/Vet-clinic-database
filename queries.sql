@@ -16,6 +16,7 @@ AND escape_attempts < 3
 SELECT date_of_birth
 from animals
 WHERE name = 'Pikachu'
+or name = 'Agumon'
 
 SELECT name, escape_attempts
 from animals
