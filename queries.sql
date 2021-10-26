@@ -35,6 +35,18 @@ from animals
 WHERE weight_kg >= 10.4
 AND weight_kg <= 17.3
 
+BEGIN TRAN
+
+UPDATE animals 
+SET species =  'digimon'
+WHERE name like '%mon';
+
+UPDATE animals
+SET species =  'pokemon'
+WHERE species IS NULL
+
+COMMIT TRAN
+
 BEGIN TRAN 
 
 DELETE FROM animals
