@@ -74,32 +74,32 @@ WHERE date_of_brith BETWEEN '01/01/1999' AND '01/01/2000';
 
 
 UPDATE animals
-SET id_species = 2
+SET id_species = (SELECT id_species from species WHERE name = 'Pokemon')
 WHERE id_species IS NULL
 
 UPDATE animals 
-SET id_species =  1
+SET id_species =  (SELECT id_species from species WHERE name = 'Digimon')
 WHERE name like '%mon';
 
 UPDATE animals 
-SET id_owners =  1
+SET id_owners = (SELECT id_owners from owners WHERE full_name = 'Sam Smith')
 WHERE name like 'Agumon';
 
 UPDATE animals 
-SET id_owners =  2
+SET id_owners =  (SELECT id_owners from owners WHERE full_name = 'Jennifer Orwell')
 WHERE name in ('Gabumon', 'Pikachu');
 
 UPDATE animals 
-SET id_owners =  3
+SET id_owners = (SELECT id_owners from owners WHERE full_name = 'Bob')
 WHERE name in ('Devimon', 'Plantmon');
 
 
 UPDATE animals 
-SET id_owners =  4
+SET id_owners =  (SELECT id_owners from owners WHERE full_name = 'Melody Pond')
 WHERE name in ( 'Charmander', 'Squirtle', 'Blossom');
 
 UPDATE animals 
-SET id_owners =  5
+SET id_owners =  (SELECT id_owners from owners WHERE full_name = 'Dean Winchester')
 WHERE name in (  'Angemon', 'Boarmon');
 
 
@@ -107,26 +107,39 @@ SELECT A.id_owners, O.full_name, count(*) as Total
 FROM animals A
 INNER JOIN owners O on (A.id_owners = O.id_owners) 
 GROUP BY A.id_owners, O.full_name
-ORDER BY 3 DES
+ORDER BY 3 DESC
 
-SELECT COUNT(id_species) FROM animals
-WHERE id_species  = 1
+SELECT * 
+FROM animals A
+LEFT JOIN species S
+ON A.id_species = S.id_species
+WHERE S.name = 'Pokemon';
 
-SELECT COUNT(id_species) FROM animals
-WHERE id_species  = 2
+SELECT * 
+FROM animals A
+LEFT JOIN species S
+ON A.id_species = S.id_species
+WHERE S.name = 'Digimon';
 
 SELECT A.name, A.id_owners, O.full_name
 FROM animals A
 LEFT join owners O on (A.id_owners = O.id_owners)
 
-SELECT O.name
-FROM species O
-INNER JOIN animals A on (O.id_species = A.id_owners)
+SELECT A.* 
+FROM animals A
+LEFT JOIN owners O
+ON A.id_owners = O.id_owners
+LEFT JOIN species S
+ON A.id_species = S.id_species
+WHERE O.full_name = 'Jennifer Orwell'
+AND S.name = 'Digimon';
 
-SELECT O.id_owners, full_name, A.id_animals
-FROM owners O
-INNER JOIN animals A on (O.id_owners = 5 AND A.neutered = false)
-GROUP BY A.id_animals, O.id_owners
+SELECT A.* 
+FROM animals A
+LEFT JOIN owners O
+ON A.id_owners = O.id_owners
+WHERE O.full_name = 'Dean Winchester'
+AND A.escape_attempts = 0;
 
 SELECT id_owners, count(*) FROM animals 
     GROUP BY id_owners

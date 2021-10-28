@@ -2,14 +2,16 @@
 
 CREATE TABLE animals (
     id_animals int NOT NULL GENERATED ALWAYS AS IDENTITY,
-  	id_owners int REFERENCES owners (id_owners),
-  	id_species int REFERENCES species (id_species),
+  	id_owners int,
+  	id_species int,
 	name VARCHAR(30),
 	date_of_birth date NOT NULL,
 	escape_attempts integer NOT NULL,
 	neutered boolean NOT NULL,
 	weight_kg integer NOT NULL,
-	PRIMARY KEY (id_animals)
+	PRIMARY KEY (id_animals),
+	FOREIGN KEY (id_owners) REFERENCES owners (id_owners),
+	FOREIGN KEY (id_species) REFERENCES species (id_species)
 )
 
 CREATE TABLE owners (
