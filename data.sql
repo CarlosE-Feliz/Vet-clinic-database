@@ -110,6 +110,7 @@ INSERT INTO species (id_species, name)
 VALUES(2, 'Digimon');
 
 
+
 INSERT INTO vets (id_vets, name_vets, age, date_of_graduation)
 VALUES(01, 'William Tatcher', 45, '04/23/200');
 
@@ -121,6 +122,18 @@ VALUES(03, 'Stephanie Mendez', 64, '04/01/1981');
 
 INSERT INTO vets (id_vets, name_vets, age, date_of_graduation)
 VALUES(04, 'Jack Harkness', 38, '06/08/2008');
+
+ INSERT INTO specializations (id_species, id_vet)
+ VALUES ((SELECT id_vets FROM vets WHERE name = 'William Tatcher'), (SELECT id_species FROM species WHERE name = 'Pokemon'));
+
+ INSERT INTO specializations (id_species, id_vet)
+ VALUES ((SELECT id_vets FROM vets WHERE name = 'Stephanie Mendez'), (SELECT id_species FROM species WHERE name = 'Pokemon'));
+
+ INSERT INTO specializations ((id_species, id_vet)
+ VALUES ((SELECT id_vets FROM vets WHERE name = 'Stephanie Mendez'), (SELECT id_species FROM species WHERE name = 'Digimon'));
+
+ INSERT INTO specializations ((id_species, id_vet)
+ VALUES ((SELECT id_vets FROM vets WHERE name = 'Jack Harkness'), (SELECT id_species FROM species WHERE name = 'Digimon'));
 
 INSERT INTO visits (id_animal, id_vet, date_visit) 
 VALUES ((SELECT id_animals FROM animals WHERE name = 'Agumon'), 

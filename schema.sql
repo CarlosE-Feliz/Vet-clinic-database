@@ -42,6 +42,6 @@ id_animal int,
 )
 
 CREATE TABLE specializations (
-id_species int,
+    id_species int,
 	id_vet int
 )
