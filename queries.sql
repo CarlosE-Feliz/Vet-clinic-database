@@ -144,3 +144,65 @@ AND A.escape_attempts = 0;
 SELECT id_owners, count(*) FROM animals 
     GROUP BY id_owners
     HAVING COUNT(*)>2;
+
+
+SELECT animals.name, visits.date_visit
+FROM visits
+LEFT JOIN animals ON animals.id_animals =  visits.id_animal
+LEFT JOIN vets ON vets.id_vets = visits.id_animal
+WHERE vets.name_vets = 'William Tatcher'
+ORDER BY visits.date_visit DESC
+LIMIT 1;
+
+SELECT DISTINCT animals.name
+FROM visits
+LEFT JOIN animals ON animals.id_animals = visits.id_animal
+LEFT JOIN vets ON vets.id_vets = visits.id_vet
+WHERE vets.name_vets = 'Stephanie Mendez';
+
+SELECT vets.*, species.name
+FROM vets
+LEFT JOIN specializations ON vets.id_vets = specializations.id_vet
+LEFT JOIN species ON specializations.id_species = species.id_species;
+
+SELECT animals.name, visits.date_visit
+FROM visits
+LEFT JOIN animals ON animals.id_animals = visits.id_animal
+LEFT JOIN vets ON vets.id_vets = visits.id_vet
+WHERE vets.name_vets = 'Stephanie Mendez'
+AND date_visit > '2020-04-01' AND date_visit < '2020-08-30';
+
+SELECT A.name, COUNT(A.name)
+FROM visits
+LEFT JOIN animals A ON A.id_animals = visits.id_animal
+ORDER BY COUNT(A.name) DESC
+
+SELECT animals.name, visits.date_visit
+FROM visits
+LEFT JOIN animals ON animals.id_animals = visits.id_animal
+LEFT JOIN vets ON vets.id_vets = visits.id_vet
+ORDER BY visits.date_visit ASC
+LIMIT 1;
+
+SELECT animals.*, vets.*, visits.date_visit
+FROM visits
+LEFT JOIN animals ON animals.id_animals = visits.id_animal
+LEFT JOIN vets ON vets.id_vets = visits.id_vet
+ORDER BY visits.date_visit DESC
+LIMIT 1;
+
+SELECT COUNT(*)
+FROM visits
+LEFT JOIN animals ON animals.id_animals = visits.id_vet
+LEFT JOIN vets ON vets.id_vets = visits.id_vet
+WHERE animals.id_species NOT IN (SELECT id_species FROM specializations WHERE id_vet = vets.id_vets);
+
+SELECT species.name, COUNT(*)
+FROM visits
+LEFT JOIN animals ON animals.id_animals = visits.id_animal
+LEFT JOIN species ON animals.id_species = species.id_species
+LEFT JOIN vets ON vets.id_vets = visits.id_vet
+WHERE vets.name_vets = 'Maisy Smith'
+GROUP BY species.name;
+
+

@@ -26,3 +26,22 @@ CREATE TABLE species (
     name VARCHAR(30),
     PRIMARY KEY (id_species)
 );
+
+CREATE TABLE vets (
+    id_vets INT NOT NULL,
+	name_vets VARCHAR(30),
+	age INT,
+	date_of_graduation date,
+	PRIMARY KEY (id_vets)
+);
+
+CREATE TABLE visits (
+id_animal int,
+	id_vet int,
+	date_visit date
+)
+
+CREATE TABLE specializations (
+id_species int,
+	id_vet int
+)
